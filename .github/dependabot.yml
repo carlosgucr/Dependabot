@@ -1,0 +1,36 @@
+version: 2
+updates:
+  # 1. Monitoreo proactivo de paquetes npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Mexico_City"
+    open-pull-requests-limit: 5
+    # Agrupa actualizaciones menores y parches en un solo PR
+    groups:
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    labels:
+      - "dependencies"
+      - "automated-pr"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # 2. Monitoreo de acciones de CI/CD (GitHub Actions)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Mexico_City"
+    open-pull-requests-limit: 3
+    labels:
+      - "ci-cd"
